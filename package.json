@@ -1,0 +1,14 @@
+{
+  "name": "metalens",
+  "version": "0.0.1",
+  "description": "Metalens optical simulator",
+  "main": "src/index.html",
+  "scripts": {
+    "start": "parcel src/index.html"
+  },
+  "author": "ax37",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.7.2"
+  }
+}
