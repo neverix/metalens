@@ -17,6 +17,8 @@ export default class Raytracer {
         /**
          * Renders and image using raycasting
          */
+        // Create light vector
+        const light = vec3.fromValues(0, -1, 0)
         // Loop over all pixels
         for (let x = 0; x < image.width; x++) {
             for (let y = 0; y < image.height; y++) {
@@ -29,6 +31,16 @@ export default class Raytracer {
                     const hit = this.world.hit(ray)
                     if (hit == null) break
                     ray = hit.ray
+                    // Compute Lambertian shading
+                    if (hit.shade) {
+                        // TODO make lighting customizable
+                        const shading = vec3.dot(light, hit.ray.direction)
+                        vec3.mul(
+                            color,
+                            color,
+                            vec3.fromValues(shading, shading, shading)
+                        )
+                    }
                     // Modulate color
                     vec3.mul(color, color, hit.albedo)
                 }
