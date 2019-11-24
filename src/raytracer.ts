@@ -1,10 +1,13 @@
-import Camera from "./camera";
+import Camera from "./camera"
+import { Surface } from "./surface"
 
 export default class Raytracer {
     camera: Camera
+    world: Surface
 
-    constructor(camera: Camera) {
+    constructor(camera: Camera, world: Surface) {
         this.camera = camera
+        this.world = world
     }
 
     render(image: ImageData) {
