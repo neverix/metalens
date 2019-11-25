@@ -34,7 +34,7 @@ export default class Raytracer {
                     // Compute Lambertian shading
                     if (hit.shade) {
                         // TODO make lighting customizable
-                        const shading = vec3.dot(light, hit.ray.direction)
+                        const shading = vec3.dot(light, hit.ray.direction) * -10
                         vec3.mul(
                             color,
                             color,
