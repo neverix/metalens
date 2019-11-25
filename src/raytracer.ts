@@ -1,15 +1,23 @@
 import Camera from "./camera"
 import { Surface } from "./surface"
 import { vec3 } from "gl-matrix"
+import { Light } from "./light"
 
 export default class Raytracer {
     camera: Camera
     world: Surface
+    light: Light
     bounces: number
 
-    constructor(camera: Camera, world: Surface, bounces?: number) {
+    constructor(
+        camera: Camera,
+        world: Surface,
+        light: Light,
+        bounces?: number
+    ) {
         this.camera = camera
         this.world = world
+        this.light = light
         this.bounces = bounces || 3
     }
 
@@ -17,8 +25,6 @@ export default class Raytracer {
         /**
          * Renders and image using raycasting
          */
-        // Create light vector
-        const light = vec3.fromValues(0, -1, 0)
         // Loop over all pixels
         for (let x = 0; x < image.width; x++) {
             for (let y = 0; y < image.height; y++) {
@@ -33,13 +39,8 @@ export default class Raytracer {
                     ray = hit.ray
                     // Compute Lambertian shading
                     if (hit.shade) {
-                        // TODO make lighting customizable
-                        const shading = vec3.dot(light, hit.ray.direction) * -10
-                        vec3.mul(
-                            color,
-                            color,
-                            vec3.fromValues(shading, shading, shading)
-                        )
+                        const shading = this.light.shade(ray.direction)
+                        vec3.mul(color, color, shading)
                     }
                     // Modulate color
                     vec3.mul(color, color, hit.albedo)
