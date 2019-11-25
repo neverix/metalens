@@ -20,7 +20,10 @@ function main() {
                 vec3.fromValues(0, 0, 0)
             )
         ]),
-        new Lambertian(vec3.fromValues(0, -1, 0), vec3.fromValues(1, 1, 1))
+        new Lambertian(
+            vec3.fromValues(-1, -1, 1),
+            vec3.fromValues(0.7, 0.7, 0.7)
+        )
     )
     raytracer.render(image)
     ctx.putImageData(image, 0, 0)
