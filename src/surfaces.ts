@@ -22,7 +22,7 @@ export class Surfaces {
             const hit = object.hit(ray)
             if (hit == null) return
             const distance = vec3.dist(ray.position, hit.ray.position)
-            if (distance > minDistance) return
+            if (distance >= minDistance) return
             minDistance = distance
             result = hit
         })

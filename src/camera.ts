@@ -5,11 +5,14 @@ export default class Camera {
     /**
      * A simple orthographic camera.
      */
-
+    width: number
+    height: number
     matrix: mat4
     direction: vec3
 
-    constructor(position: vec3, rotation: quat) {
+    constructor(width: number, height: number, position: vec3, rotation: quat) {
+        this.width = width
+        this.height = height
         // Create a matrix to translate and rotate points
         this.matrix = mat4.create()
         mat4.fromQuat(this.matrix, rotation)
@@ -25,6 +28,10 @@ export default class Camera {
          * @param x - The X coordinate of the point on the camera's surface
          * @param y - The Y coordinate of the point on the camera's surface
          */
+        x -= this.width / 2
+        y -= this.height / 2
+        x /= this.width / 2
+        y /= this.height / 2
         const point = vec3.fromValues(x, y, 0)
         vec3.transformMat4(point, point, this.matrix)
         return new Ray(point, this.direction)

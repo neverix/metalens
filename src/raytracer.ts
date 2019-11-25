@@ -37,13 +37,14 @@ export default class Raytracer {
                     const hit = this.world.hit(ray)
                     if (hit == null) break
                     ray = hit.ray
+                    // Modulate color
+                    vec3.mul(color, color, hit.albedo)
                     // Compute Lambertian shading
                     if (hit.shade) {
                         const shading = this.light.shade(ray.direction)
                         vec3.mul(color, color, shading)
+                        break
                     }
-                    // Modulate color
-                    vec3.mul(color, color, hit.albedo)
                 }
                 // Set image pixel RGBA values
                 const startIndex = (image.width * y + x) * 4

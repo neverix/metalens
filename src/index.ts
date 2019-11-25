@@ -3,16 +3,18 @@ import Camera from "./camera"
 import { vec3, quat } from "gl-matrix"
 import { Surfaces } from "./surfaces"
 import { Lambertian } from "./lambertian"
+import { Translate } from "./transforms"
+import { Sphere } from "./sphere"
 
 function main() {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
     const { width, height } = canvas
     const ctx = canvas.getContext("2d")
     const image = ctx.createImageData(width, height)
-    const camera = new Camera(vec3.create(), quat.create())
+    const camera = new Camera(width, height, vec3.create(), quat.create())
     const raytracer = new Raytracer(
         camera,
-        new Surfaces([]),
+        new Surfaces([new Translate(new Sphere(), vec3.fromValues(0, 0, 0))]),
         new Lambertian(vec3.fromValues(0, -1, 0), vec3.fromValues(10, 10, 10))
     )
     raytracer.render(image)
