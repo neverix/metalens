@@ -3,7 +3,7 @@ import Camera from "./camera"
 import { vec3, quat } from "gl-matrix"
 import { Surfaces } from "./surfaces"
 import { Lambertian } from "./lambertian"
-import { Translate } from "./transforms"
+import { Translate, Tint } from "./transforms"
 import { Sphere } from "./sphere"
 
 function main() {
@@ -14,8 +14,13 @@ function main() {
     const camera = new Camera(width, height, vec3.create(), quat.create())
     const raytracer = new Raytracer(
         camera,
-        new Surfaces([new Translate(new Sphere(), vec3.fromValues(0, 0, 0))]),
-        new Lambertian(vec3.fromValues(0, -1, 0), vec3.fromValues(10, 10, 10))
+        new Surfaces([
+            new Translate(
+                new Tint(new Sphere(), vec3.fromValues(0.75, 0.75, 0.75)),
+                vec3.fromValues(0, 0, 0)
+            )
+        ]),
+        new Lambertian(vec3.fromValues(0, -1, 0), vec3.fromValues(1, 1, 1))
     )
     raytracer.render(image)
     ctx.putImageData(image, 0, 0)
