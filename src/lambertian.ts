@@ -9,6 +9,8 @@ export class Lambertian {
 
     constructor(direction: vec3, color: vec3) {
         this.direction = direction
+        vec3.normalize(this.direction, this.direction)
+        vec3.negate(this.direction, this.direction)
         this.color = color
     }
 
@@ -16,7 +18,7 @@ export class Lambertian {
         /**
          * Shades a surface according to the Lambertian shading model
          */
-        const shading = vec3.dot(normal, this.direction)
+        const shading = vec3.dot(this.direction, normal) / 2 + 0.5
         const result = vec3.clone(this.color)
         vec3.mul(result, result, vec3.fromValues(shading, shading, shading))
         return result

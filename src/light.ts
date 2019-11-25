@@ -15,7 +15,7 @@ export class Lights {
     }
 
     shade(normal: vec3): vec3 {
-        let result = vec3.create()
+        const result = vec3.fromValues(0, 0, 0)
         this.lights.forEach(light => {
             vec3.add(result, result, light.shade(normal))
         })

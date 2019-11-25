@@ -5,6 +5,7 @@ import { Surfaces } from "./surfaces"
 import { Lambertian } from "./lambertian"
 import { Translate, Tint } from "./transforms"
 import { Sphere } from "./sphere"
+import { Lights } from "./light"
 
 function main() {
     const canvas = document.getElementById("canvas") as HTMLCanvasElement
@@ -17,13 +18,19 @@ function main() {
         new Surfaces([
             new Translate(
                 new Tint(new Sphere(), vec3.fromValues(0.75, 0.75, 0.75)),
-                vec3.fromValues(0, 0, 0)
+                vec3.fromValues(0, 0, 10)
             )
         ]),
-        new Lambertian(
-            vec3.fromValues(-1, -1, 1),
-            vec3.fromValues(0.7, 0.7, 0.7)
-        )
+        new Lights([
+            new Lambertian(
+                vec3.fromValues(1, 1, 0.5),
+                vec3.fromValues(0.7, 0.2, 1)
+            ),
+            new Lambertian(
+                vec3.fromValues(-2, -1, -3),
+                vec3.fromValues(1, 0.6, 0.2)
+            )
+        ])
     )
     raytracer.render(image)
     ctx.putImageData(image, 0, 0)
