@@ -9,4 +9,5 @@ export interface SurfaceHit {
     albedo: vec3
     ray: Ray
     shade: boolean
+    distance: number
 }

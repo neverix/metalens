@@ -21,8 +21,9 @@ export class Surfaces {
         this.objects.forEach(object => {
             const hit = object.hit(ray)
             if (hit == null) return
-            const distance = vec3.dist(ray.position, hit.ray.position)
+            const distance = hit.distance
             if (distance >= minDistance) return
+            if (distance <= Number.EPSILON) return
             minDistance = distance
             result = hit
         })

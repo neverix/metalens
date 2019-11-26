@@ -18,7 +18,7 @@ export default class Raytracer {
         this.camera = camera
         this.world = world
         this.light = light
-        this.bounces = bounces || 3
+        this.bounces = bounces || 5
     }
 
     render(image: ImageData) {

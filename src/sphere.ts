@@ -20,6 +20,11 @@ export class Sphere {
         const direction = vec3.clone(position)
         vec3.normalize(direction, direction)
         ray = new Ray(position, direction)
-        return { albedo: vec3.fromValues(1, 1, 1), ray, shade: true }
+        return {
+            albedo: vec3.fromValues(1, 1, 1),
+            ray,
+            shade: true,
+            distance: t
+        }
     }
 }

@@ -18,7 +18,33 @@ export class Translate {
         const position = vec3.clone(ray.position)
         vec3.sub(position, position, this.translation)
         ray = new Ray(position, ray.direction)
-        return this.surface.hit(ray)
+        const hit = this.surface.hit(ray)
+        if (hit == null) return
+        vec3.add(hit.ray.position, hit.ray.position, this.translation)
+        return hit
+    }
+}
+
+export class Scale {
+    /**
+     * Wrapper to apply scaling to a surface
+     */
+    scale: vec3
+    surface: Surface
+
+    constructor(surface: Surface, scale: vec3) {
+        this.surface = surface
+        this.scale = scale
+    }
+
+    hit(ray: Ray): SurfaceHit {
+        const position = vec3.clone(ray.position)
+        vec3.div(position, position, this.scale)
+        ray = new Ray(position, ray.direction)
+        const hit = this.surface.hit(ray)
+        if (hit == null) return
+        vec3.mul(hit.ray.position, hit.ray.position, this.scale)
+        return hit
     }
 }
 
