@@ -35,7 +35,12 @@ export class Lens {
         vec3.normalize(ray2dir, ray2dir)
         const ray2 = new Ray(ray2pos, ray2dir)
         const focus = vec3.clone(this.focus) // ray1.intersectRay(ray2)
-        vec3.sub(focus, focus, point)
+
+        if (focus[2] > 0) {
+            vec3.sub(focus, focus, point)
+        } else {
+            vec3.sub(focus, point, focus)
+        }
         vec3.normalize(focus, focus)
         ray = new Ray(point, focus)
         return {
