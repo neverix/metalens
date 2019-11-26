@@ -19,22 +19,28 @@ function main() {
         new Surfaces([
             new Translate(
                 new Scale(new Lens(0.7), vec3.fromValues(2, 2, 2)),
-                vec3.fromValues(0, 0, 1)
+                vec3.fromValues(0, 0, 0.1)
             ),
             new Translate(
-                new Tint(new Sphere(), vec3.fromValues(0.75, 0.75, 0.75)),
-                vec3.fromValues(0, 0, 15)
+                new Tint(new Sphere(), vec3.fromValues(1, 0, 0)),
+                vec3.fromValues(-5, 0, 15)
             ),
             new Translate(
                 new Tint(
-                    new Scale(new Sphere(), vec3.fromValues(0.5, 0.5, 0.5)),
+                    new Scale(
+                        new Tint(new Sphere(), vec3.fromValues(0, 1, 0)),
+                        vec3.fromValues(2, 2, 2)
+                    ),
                     vec3.fromValues(0.75, 0.75, 0.75)
                 ),
                 vec3.fromValues(1, 1, 7)
             )
         ]),
         new Lights([
-            new Lambertian(vec3.fromValues(1, 1, 0.5), vec3.fromValues(1, 1, 1))
+            new Lambertian(
+                vec3.fromValues(-1, -1, -0.5),
+                vec3.fromValues(1, 1, 1)
+            )
         ])
     )
     raytracer.render(image)
