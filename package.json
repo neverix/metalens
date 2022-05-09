@@ -2,17 +2,18 @@
   "name": "metalens",
   "version": "0.0.1",
   "description": "Metalens optical simulator",
-  "main": "src/index.html",
+  "html": "src/index.html",
   "scripts": {
     "start": "parcel src/index.html"
   },
   "author": "ax37",
   "license": "MIT",
   "devDependencies": {
-    "typescript": "^3.7.2"
+    "parcel": "*",
+    "typescript": "^3.9.10"
   },
   "dependencies": {
     "@types/gl-matrix": "^2.4.5",
-    "gl-matrix": "^3.1.0"
+    "gl-matrix": "^3.4.3"
   }
 }

@@ -14,12 +14,21 @@ function main() {
     const ctx = canvas.getContext("2d")
     const image = ctx.createImageData(width, height)
     const camera = new Camera(width, height, vec3.create(), quat.create())
+
+    // TODO:
+    // - add accumulation buffer for DoF
+    //   - add DoF
+    // - add reflections
+    //   - add refractions
+    // - add CSG
+    //   - add lenses
+
     const raytracer = new Raytracer(
         camera,
         new Scale(
             new Surfaces([
                 new Translate(
-                    new Scale(new Lens(-1), vec3.fromValues(2, 2, 2)),
+                    new Scale(new Lens(0.5), vec3.fromValues(2, 2, 2)),
                     vec3.fromValues(0, 0, 0.1)
                 ),
                 new Translate(

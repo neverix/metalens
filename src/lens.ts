@@ -6,10 +6,12 @@ export class Lens {
     /**
      * Geometric lens.
      */
+    focalLength: number
     focus: vec3
 
     constructor(focalLength: number) {
-        this.focus = vec3.fromValues(0, 0, focalLength)
+        this.focalLength = focalLength
+        this.focus = vec3.fromValues(0, 0, -focalLength)
     }
 
     hit(ray: Ray): SurfaceHit {
@@ -18,10 +20,12 @@ export class Lens {
         if (intersection < 0) return null
         const point = ray.atPoint(intersection)
         if (vec3.len(point) > 1) return null
+
         const ray1dir = vec3.create()
         vec3.subtract(ray1dir, ray1dir, ray.position)
         vec3.normalize(ray1dir, ray1dir)
         const ray1 = new Ray(ray.position, ray1dir)
+
         const ray2ray = new Ray(ray.position, vec3.fromValues(0, 0, 1))
         const ray2dist = ray2ray.intersectPlane()
         if (ray2dist == null) return null
@@ -34,10 +38,10 @@ export class Lens {
         vec3.sub(ray2dir, this.focus, ray2pos)
         vec3.normalize(ray2dir, ray2dir)
         const ray2 = new Ray(ray2pos, ray2dir)
-        const focus = vec3.clone(this.focus) // ray1.intersectRay(ray2)
 
-        if (focus[2] > 0) {
-            vec3.sub(focus, focus, point)
+        const focus = vec3.clone(this.focus) // ray1.intersectRay(ray2)
+        if (this.focalLength > 0) {
+            vec3.sub(focus, point, focus)
         } else {
             vec3.sub(focus, point, focus)
         }
