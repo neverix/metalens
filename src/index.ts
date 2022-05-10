@@ -60,8 +60,10 @@ function main() {
                 vec3.fromValues(3, 3, 3)
             )
         ]),
-        2,
-        0.2
+        2,  // N bounces
+        0.2  // DoF disk
+        // DoF focal length
+        // DoF aperture
     )
 
     let n = 0
