@@ -2,23 +2,33 @@ import Camera from "./camera"
 import { Surface } from "./surface"
 import { vec3 } from "gl-matrix"
 import { Light } from "./light"
+import { normal } from "./math"
 
 export default class Raytracer {
     camera: Camera
     world: Surface
     light: Light
     bounces: number
+    shuffle: number
+    focal: number
+    aperture: number
 
     constructor(
         camera: Camera,
         world: Surface,
         light: Light,
-        bounces?: number
+        bounces?: number,
+        shuffle?: number,
+        focal?: number,
+        aperture?: number
     ) {
         this.camera = camera
         this.world = world
         this.light = light
         this.bounces = bounces || 5
+        this.shuffle = shuffle || 0.1
+        this.focal = focal || 0.2
+        this.aperture = aperture || 0.05
     }
 
     render(image: ImageData) {
@@ -32,6 +42,10 @@ export default class Raytracer {
             for (let y = 0; y < image.height; y++) {
                 // Cast ray from camera surface
                 let ray = this.camera.castRay(x, y)
+                // Shuffle (disk permutation)
+                // Disk shuffle
+                ray.position[0] += normal() * this.shuffle
+                ray.position[1] += normal() * this.shuffle
                 // Default color is white
                 let color = vec3.fromValues(0, 0, 0)
                 for (let i = 0; i < this.bounces; i++) {
