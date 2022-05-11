@@ -67,7 +67,22 @@ function main() {
     )
 
     let n = 0
-    const accumulation = 128;
+    const accumulation = 128
+    let pausePromise = null, resolver = null
+    let paused = false
+
+    canvas.onclick = async () => {
+        if(!paused) {
+            pausePromise = new Promise(res => {
+                resolver = res
+            })
+            paused = true
+        } else {
+            paused = false
+            resolver()
+        }
+    }
+
     function update() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const buffer = ctx.createImageData(width, height)
@@ -80,6 +95,12 @@ function main() {
         ctx.putImageData(image, 0, 0)
         n += 1
         n = Math.min(n, accumulation)
+        if(paused) {
+            pausePromise.then(() => {
+                requestAnimationFrame(update)
+            })
+            return
+        }
         requestAnimationFrame(update)
     }
 
